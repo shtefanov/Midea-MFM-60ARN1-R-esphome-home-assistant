@@ -86,7 +86,6 @@ https://esphome.io/components/climate/midea/
 
 ### BSS138 level shifter
 
-![BSS138 level shifter](docs/images/bss138-level-shifter.jpg)
 
 ---
 
