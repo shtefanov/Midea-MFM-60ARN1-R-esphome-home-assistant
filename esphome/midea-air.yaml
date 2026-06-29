@@ -71,7 +71,7 @@ climate:
       - VERTICAL
       - HORIZONTAL
       - BOTH
-
+I’m # у меня не определился датчик, всегда показывает 120 градусов, можно этот блок удалить
     outdoor_temperature:
       name: "Midea AIR Outdoor Temperature"
 
