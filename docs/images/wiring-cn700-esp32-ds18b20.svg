@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+  <defs>
+    <style>
+      .box { fill:#ffffff; stroke:#1f2937; stroke-width:3; rx:18; }
+      .title { font:700 28px Arial, sans-serif; fill:#111827; }
+      .label { font:600 19px Arial, sans-serif; fill:#111827; }
+      .small { font:16px Arial, sans-serif; fill:#374151; }
+      .mono { font:16px monospace; fill:#111827; }
+      .red { stroke:#dc2626; fill:none; stroke-width:5; }
+      .black { stroke:#111827; fill:none; stroke-width:5; }
+      .blue { stroke:#2563eb; fill:none; stroke-width:5; }
+      .green { stroke:#16a34a; fill:none; stroke-width:5; }
+      .orange { stroke:#f59e0b; fill:none; stroke-width:5; }
+      .thin { stroke-width:3; }
+      .pin { fill:#f3f4f6; stroke:#111827; stroke-width:2; }
+      .note { fill:#fffbeb; stroke:#f59e0b; stroke-width:2; rx:12; }
+      .warn { fill:#fef2f2; stroke:#dc2626; stroke-width:2; rx:12; }
+      .subtle { fill:#f9fafb; stroke:#d1d5db; stroke-width:2; }
+    </style>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-black" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#111827"/>
+    </marker>
+  </defs>
+
+  <text x="640" y="45" text-anchor="middle" class="title">Midea CN700 → BSS138 Level Shifter → ESP32 + DS18B20</text>
+  <text x="640" y="75" text-anchor="middle" class="small">UART: 9600 baud. Verify CN700 GND and +5V with a multimeter. Swap TX/RX if there is no response.</text>
+
+  <!-- CN700 -->
+  <rect x="50" y="115" width="250" height="330" class="box"/>
+  <text x="175" y="155" text-anchor="middle" class="title">CN700</text>
+  <text x="175" y="182" text-anchor="middle" class="small">Wi‑Fi module interface</text>
+
+  <circle cx="95" cy="230" r="13" class="pin"/><text x="125" y="237" class="label">+5V</text>
+  <circle cx="95" cy="285" r="13" class="pin"/><text x="125" y="292" class="label">TX from AC</text>
+  <circle cx="95" cy="340" r="13" class="pin"/><text x="125" y="347" class="label">RX to AC</text>
+  <circle cx="95" cy="395" r="13" class="pin"/><text x="125" y="402" class="label">GND</text>
+
+  <rect x="67" y="465" width="210" height="92" class="note"/>
+  <text x="172" y="492" text-anchor="middle" class="label">CN700 pinout</text>
+  <text x="82" y="520" class="small">GND/+5V: multimeter</text>
+  <text x="82" y="545" class="small">remaining pins: TX/RX</text>
+
+  <!-- Level shifter -->
+  <rect x="450" y="105" width="330" height="430" class="box"/>
+  <text x="615" y="145" text-anchor="middle" class="title">BSS138 Level Shifter</text>
+  <text x="615" y="175" text-anchor="middle" class="small">1 module, use 2 of 4 channels</text>
+  <line x1="615" y1="205" x2="615" y2="505" stroke="#9ca3af" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="535" y="215" text-anchor="middle" class="label">HV 5V</text>
+  <text x="695" y="215" text-anchor="middle" class="label">LV 3.3V</text>
+
+  <rect x="485" y="240" width="100" height="46" class="subtle"/><text x="535" y="270" text-anchor="middle" class="label">HV</text>
+  <rect x="645" y="240" width="100" height="46" class="subtle"/><text x="695" y="270" text-anchor="middle" class="label">LV</text>
+
+  <rect x="485" y="305" width="100" height="46" class="subtle"/><text x="535" y="335" text-anchor="middle" class="label">GND</text>
+  <rect x="645" y="305" width="100" height="46" class="subtle"/><text x="695" y="335" text-anchor="middle" class="label">GND</text>
+
+  <rect x="485" y="370" width="100" height="46" class="subtle"/><text x="535" y="400" text-anchor="middle" class="label">HV1</text>
+  <rect x="645" y="370" width="100" height="46" class="subtle"/><text x="695" y="400" text-anchor="middle" class="label">LV1</text>
+
+  <rect x="485" y="435" width="100" height="46" class="subtle"/><text x="535" y="465" text-anchor="middle" class="label">HV2</text>
+  <rect x="645" y="435" width="100" height="46" class="subtle"/><text x="695" y="465" text-anchor="middle" class="label">LV2</text>
+
+  <!-- ESP32 -->
+  <rect x="920" y="115" width="300" height="420" class="box"/>
+  <text x="1070" y="155" text-anchor="middle" class="title">ESP32 DevKit</text>
+  <text x="1070" y="183" text-anchor="middle" class="small">ESP‑WROOM‑32</text>
+  <circle cx="965" cy="235" r="11" class="pin"/><text x="990" y="241" class="label">VIN / 5V</text>
+  <circle cx="965" cy="295" r="11" class="pin"/><text x="990" y="301" class="label">3V3</text>
+  <circle cx="965" cy="355" r="11" class="pin"/><text x="990" y="361" class="label">GND</text>
+  <circle cx="965" cy="415" r="11" class="pin"/><text x="990" y="421" class="label">GPIO16 RX</text>
+  <circle cx="965" cy="475" r="11" class="pin"/><text x="990" y="481" class="label">GPIO17 TX</text>
+  <circle cx="965" cy="515" r="11" class="pin"/><text x="990" y="521" class="label">GPIO23 DATA</text>
+
+  <!-- DS18B20 -->
+  <rect x="920" y="590" width="300" height="125" class="box"/>
+  <text x="1070" y="625" text-anchor="middle" class="title">DS18B20</text>
+  <circle cx="950" cy="660" r="9" class="pin"/><text x="970" y="666" class="small">VCC → 3V3</text>
+  <circle cx="950" cy="690" r="9" class="pin"/><text x="970" y="696" class="small">DATA → GPIO23</text>
+  <circle cx="950" cy="720" r="9" class="pin"/><text x="970" y="726" class="small">GND → GND</text>
+
+  <!-- wires power -->
+  <path class="red" marker-end="url(#arrow-red)" d="M108 230 C330 230, 330 263, 485 263"/>
+  <path class="red" marker-end="url(#arrow-red)" d="M108 230 C360 210, 700 210, 953 235"/>
+  <path class="orange" marker-end="url(#arrow-red)" d="M965 295 C880 295, 800 263, 745 263"/>
+  <path class="black" marker-end="url(#arrow-black)" d="M108 395 C330 395, 350 328, 485 328"/>
+  <path class="black" marker-end="url(#arrow-black)" d="M965 355 C840 355, 800 328, 745 328"/>
+
+  <!-- signal -->
+  <path class="blue" marker-end="url(#arrow-blue)" d="M108 285 C310 285, 360 393, 485 393"/>
+  <path class="blue" marker-end="url(#arrow-blue)" d="M745 393 C820 393, 860 415, 953 415"/>
+  <path class="green" marker-end="url(#arrow-green)" d="M953 475 C850 475, 820 458, 745 458"/>
+  <path class="green" marker-end="url(#arrow-green)" d="M485 458 C360 458, 310 340, 108 340"/>
+
+  <!-- DS18B20 wires -->
+  <path class="red thin" marker-end="url(#arrow-red)" d="M965 295 C900 560, 910 660, 941 660"/>
+  <path class="orange thin" marker-end="url(#arrow-red)" d="M965 515 C920 580, 910 690, 941 690"/>
+  <path class="black thin" marker-end="url(#arrow-black)" d="M965 355 C900 570, 910 720, 941 720"/>
+
+  <rect x="50" y="610" width="820" height="105" class="warn"/>
+  <text x="70" y="642" class="label">Important</text>
+  <text x="70" y="672" class="small">Do not connect CN700 TX/RX directly to ESP32 GPIO. Use the level shifter.</text>
+  <text x="70" y="698" class="small">Do not connect +5V to ESP32 3V3. DS18B20 DATA needs a 4.7 kΩ pull‑up to 3V3.</text>
+</svg>

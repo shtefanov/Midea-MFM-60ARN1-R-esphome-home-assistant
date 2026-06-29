@@ -1,0 +1,48 @@
+alias: Midea AIR - управление шторкой
+description: >
+  После включения кондиционера включить скорость вентилятора AUTO,
+  включить vertical swing на 12 секунд и остановить, после включить horizontal swing.
+mode: restart
+
+triggers:
+  - trigger: state
+    entity_id: climate.midea_air_midea_air
+    from: "off"
+
+conditions:
+  - condition: template
+    value_template: >
+      {{ states('climate.midea_air_midea_air') not in ['off', 'unavailable', 'unknown'] }}
+
+actions:
+  - delay: "00:00:02"
+
+  - action: climate.set_fan_mode
+    target:
+      entity_id: climate.midea_air_midea_air
+    data:
+      fan_mode: auto
+
+  - delay: "00:00:01"
+
+  - action: climate.set_swing_mode
+    target:
+      entity_id: climate.midea_air_midea_air
+    data:
+      swing_mode: vertical
+
+  - delay: "00:00:12"
+
+  - action: climate.set_swing_mode
+    target:
+      entity_id: climate.midea_air_midea_air
+    data:
+      swing_mode: "off"
+
+  - delay: "00:00:01"
+
+  - action: climate.set_swing_mode
+    target:
+      entity_id: climate.midea_air_midea_air
+    data:
+      swing_mode: horizontal

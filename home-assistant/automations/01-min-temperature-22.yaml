@@ -1,0 +1,28 @@
+alias: Midea AIR - минимальная температура 22
+description: Если на панели кондиционера выставили ниже 22°C, вернуть 22°C
+mode: restart
+
+triggers:
+  - trigger: state
+    entity_id: climate.midea_air_midea_air
+    attribute: temperature
+
+conditions:
+  - condition: template
+    value_template: >
+      {{ trigger.to_state is not none
+         and trigger.to_state.attributes.temperature is defined
+         and (trigger.to_state.attributes.temperature | float) < 22 }}
+
+  - condition: template
+    value_template: >
+      {{ states('climate.midea_air_midea_air') not in ['off', 'unavailable', 'unknown'] }}
+
+actions:
+  - delay: "00:00:02"
+
+  - action: climate.set_temperature
+    target:
+      entity_id: climate.midea_air_midea_air
+    data:
+      temperature: 22

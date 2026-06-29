@@ -1,0 +1,21 @@
+alias: Midea AIR - отключение в 20:00
+description: Отключает кондиционер в 20:00, если он включен и работает больше 1 минуты
+mode: single
+
+triggers:
+  - trigger: time
+    at: "20:00:00"
+
+conditions:
+  - condition: template
+    value_template: >
+      {{ states('climate.midea_air_midea_air') not in ['off', 'unavailable', 'unknown'] }}
+
+  - condition: template
+    value_template: >
+      {{ (as_timestamp(now()) - as_timestamp(states.climate.midea_air_midea_air.last_changed)) > 60 }}
+
+actions:
+  - action: climate.turn_off
+    target:
+      entity_id: climate.midea_air_midea_air

@@ -1,0 +1,17 @@
+# Secrets
+secrets.yaml
+*.secret.yaml
+
+# ESPHome build files
+.esphome/
+*.bin
+*.elf
+*.map
+*.ota.bin
+
+# Local extraction workspace
+.extract/
+
+# OS files
+.DS_Store
+Thumbs.db
