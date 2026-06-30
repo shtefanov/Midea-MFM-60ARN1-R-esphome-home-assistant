@@ -1,7 +1,7 @@
-alias: Midea AIR - управление шторкой
+alias: Midea AIR - louver control
 description: >
-  После включения кондиционера включить скорость вентилятора AUTO,
-  включить vertical swing на 12 секунд и остановить, после включить horizontal swing.
+  After the air conditioner turns on, set fan speed to AUTO,
+  enable vertical swing for 12 seconds and stop it, then enable horizontal swing.
 mode: restart
 
 triggers:

@@ -28,17 +28,17 @@ wifi:
 
 captive_portal:
 
-# Midea CN700 UART через level shifter 5V ↔ 3.3V
-# GPIO17 ESP32 TX -> CN700 RX кондиционера
-# GPIO16 ESP32 RX <- CN700 TX кондиционера
+# Midea CN700 UART through a 5V <-> 3.3V level shifter
+# GPIO17 ESP32 TX -> air conditioner CN700 RX
+# GPIO16 ESP32 RX <- air conditioner CN700 TX
 uart:
   id: uart_midea
   tx_pin: GPIO17
   rx_pin: GPIO16
   baud_rate: 9600
 
-# DS18B20 на GPIO23 / D23
-# DATA -> GPIO23, pull-up 4.7 kΩ между DATA и 3V3
+# DS18B20 on GPIO23 / D23
+# DATA -> GPIO23, 4.7 kOhm pull-up between DATA and 3V3
 one_wire:
   - platform: gpio
     pin: GPIO23
@@ -71,7 +71,8 @@ climate:
       - VERTICAL
       - HORIZONTAL
       - BOTH
-# у меня не определился датчик, всегда показывает 120 градусов, можно этот блок удалить
+    # If your unit does not report a real outdoor temperature and always shows 120°C,
+    # remove this block.
     outdoor_temperature:
       name: "Midea AIR Outdoor Temperature"
 
@@ -110,7 +111,7 @@ sensor:
     name: "Midea AIR Uptime"
 
   - platform: dallas_temp
-    # Замените на адрес своего датчика или удалите строку address для автообнаружения.
+    # Replace with your sensor address or remove the address line for auto-discovery.
     address: 0xa000000035f59628
     name: "Midea AIR DS18B20 Temperature"
     update_interval: 30s

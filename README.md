@@ -1,65 +1,69 @@
-# Midea MFM-60ARN1-R → ESPHome → Home Assistant
+# Midea MFM-60ARN1-R -> ESPHome -> Home Assistant
 
 [![ESPHome](https://img.shields.io/badge/ESPHome-Midea%20UART-03A9F4)](https://esphome.io/components/climate/midea/)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Automations-41BDF5)](https://www.home-assistant.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Локальная интеграция напольного/колонного кондиционера **Midea MFM-60ARN1-R** в **Home Assistant** через штатный разъём **CN700 Wi‑Fi module interface** на плате дисплея.
+Local Home Assistant integration for the **Midea MFM-60ARN1-R** floor-standing/column air conditioner through the built-in **CN700 Wi-Fi module interface** on the display board.
 
-Проект использует:
+Russian version: [README.ru.md](README.ru.md).
 
-- **ESP32 DevKit / ESP‑WROOM‑32**
-- **BSS138 4-channel bidirectional level shifter 5V ↔ 3.3V**
+This project uses:
+
+- **ESP32 DevKit / ESP-WROOM-32**
+- **BSS138 4-channel bidirectional 5V <-> 3.3V level shifter**
 - **ESPHome Midea UART climate**
-- **DS18B20** как дополнительный внешний датчик температуры
-- Автоматизации Home Assistant для ограничения минимальной температуры, управления шторками и расписания
+- **DS18B20** as an additional external temperature sensor
+- Home Assistant automations for minimum temperature limiting, louver control, and schedules
 
-> ⚠️ Работы выполняются внутри кондиционера. Внутри есть опасное сетевое напряжение. Перед разборкой отключайте питание кондиционера. Если нет опыта работы с электроникой и 220V — лучше привлечь специалиста.
+> Warning: this project requires opening and wiring an air conditioner. Dangerous mains voltage is present inside the unit. Disconnect power before opening the air conditioner. If you are not comfortable working with electronics and mains-powered equipment, ask a qualified technician to do the wiring.
 
 ---
 
-## Состав проекта
+## Project Layout
 
 ```text
-esphome/midea-air.yaml                         # ESPHome конфигурация ESP32
-esphome/secrets.example.yaml                   # пример secrets.yaml без реальных секретов
-home-assistant/automations/                    # примеры автоматизаций Home Assistant
-docs/images/                                   # фото плат, компонентов и схема подключения
+esphome/midea-air.yaml                         # ESPHome configuration for ESP32
+esphome/secrets.example.yaml                   # example secrets.yaml without real secrets
+home-assistant/automations/                    # Home Assistant automation examples
+docs/images/                                   # board photos, component photos, and wiring diagram
 ```
 
 ---
 
-## Совместимость
+## Compatibility
 
-Проверено на конфигурации:
+Tested with:
 
-| Компонент | Значение |
+| Component | Value |
 |---|---|
 | Indoor unit | Midea MFM-60ARN1-R |
 | Main board | 2023000945S |
 | Display board | DISPLAY-DA400-JD1D.N.NXXS.XP1-1 v1.3 |
-| Wi‑Fi connector | CN700 |
+| Wi-Fi connector | CN700 |
 | UART speed | 9600 baud |
-| ESP board | ESP32 DevKit / ESP‑WROOM‑32 |
+| ESP board | ESP32 DevKit / ESP-WROOM-32 |
 | ESPHome framework | Arduino |
 | Temperature sensor | DS18B20, GPIO23 |
 
-ESPHome `midea` требует UART `9600 baud`, а Midea hardware interface обычно использует **5V logic levels**, поэтому между CN700 и ESP32 нужен level shifter. См. официальную документацию ESPHome:
+ESPHome `midea` requires `9600 baud` UART. The Midea hardware interface usually uses **5V logic levels**, so a level shifter is required between CN700 and ESP32.
+
+Official ESPHome documentation:
 https://esphome.io/components/climate/midea/
 
 ---
 
-## Фото плат
+## Board Photos
 
-### Основная плата
+### Main board
 
 ![Main board 2023000945S](docs/images/main-board-2023000945S.jpg)
 
-### Плата дисплея
+### Display board
 
 ![Display board](docs/images/display-board-front.jpg)
 
-### CN700 Wi‑Fi module interface
+### CN700 Wi-Fi module interface
 
 ![CN700 front](docs/images/cn700-front.jpg)
 
@@ -69,16 +73,16 @@ https://esphome.io/components/climate/midea/
 
 ---
 
-## Что нужно купить
+## Bill of Materials
 
-| Деталь | Количество | Комментарий |
+| Part | Quantity | Notes |
 |---|---:|---|
-| ESP32 DevKit / ESP‑WROOM‑32 | 1 | Обычная ESP32-плата |
-| BSS138 4-channel level shifter | 1 | Нужны только 2 канала |
-| DS18B20 | 1 | Желательно влагозащищённый в металлической гильзе |
-| Резистор 4.7 кОм | 1 | Между DATA DS18B20 и 3V3 |
-| Провода Dupont/JST | по месту | Для подключения CN700 |
-| Термоусадка/изоляция | по месту | Для безопасного монтажа |
+| ESP32 DevKit / ESP-WROOM-32 | 1 | Standard ESP32 board |
+| BSS138 4-channel level shifter | 1 | Only 2 channels are required |
+| DS18B20 | 1 | Waterproof metal-probe version is recommended |
+| 4.7 kOhm resistor | 1 | Between DS18B20 DATA and 3V3 |
+| Dupont/JST wires | as needed | For CN700 wiring |
+| Heat shrink / insulation | as needed | For safer installation |
 
 ### ESP32
 
@@ -89,28 +93,28 @@ https://esphome.io/components/climate/midea/
 
 ---
 
-## Схема подключения
+## Wiring
 
 ![Wiring diagram](docs/images/wiring-cn700-esp32-ds18b20.svg)
 
-### CN700 → BSS138 → ESP32
+### CN700 -> BSS138 -> ESP32
 
-> На некоторых платах CN700 может не иметь подписей пинов. Сначала найдите **GND** и **+5V** мультиметром. Два оставшихся пина — TX/RX. Если связи нет, поменяйте только TX/RX местами.
+> Some CN700 connectors may not have pin labels. First identify **GND** and **+5V** with a multimeter. The two remaining pins are TX/RX. If communication does not work, swap only TX and RX.
 
-| CN700 / кондиционер | Level shifter | ESP32 |
+| CN700 / air conditioner | Level shifter | ESP32 |
 |---|---|---|
 | +5V | HV | VIN / 5V ESP32 |
 | GND | GND | GND ESP32 |
-| TX кондиционера | HV1 → LV1 | GPIO16 / RX ESP32 |
-| RX кондиционера | HV2 ← LV2 | GPIO17 / TX ESP32 |
-| — | LV | 3V3 ESP32 |
+| Air conditioner TX | HV1 -> LV1 | GPIO16 / RX ESP32 |
+| Air conditioner RX | HV2 <- LV2 | GPIO17 / TX ESP32 |
+| - | LV | 3V3 ESP32 |
 
-Важно:
+Important:
 
-- **CN700 +5V нельзя подключать к 3V3 ESP32.**
-- **CN700 TX/RX нельзя подключать напрямую к GPIO ESP32.**
-- Для прошивки ESP32 через USB лучше временно отключать питание `CN700 +5V → VIN/5V ESP32`, чтобы не было двух источников питания одновременно.
-- `CN900 485` на дисплейной плате в этом проекте не используется.
+- **Do not connect CN700 +5V to ESP32 3V3.**
+- **Do not connect CN700 TX/RX directly to ESP32 GPIO pins.**
+- When flashing the ESP32 over USB, temporarily disconnect `CN700 +5V -> ESP32 VIN/5V` to avoid powering the board from two sources at the same time.
+- `CN900 485` on the display board is not used in this project.
 
 ---
 
@@ -118,17 +122,17 @@ https://esphome.io/components/climate/midea/
 
 ![DS18B20 to ESP32](docs/images/ds18b20-esp32-annotated.png)
 
-Подключение DS18B20:
+DS18B20 wiring:
 
 | DS18B20 | ESP32 |
 |---|---|
-| VCC / красный | 3V3 |
-| DATA / жёлтый | GPIO23 / D23 |
-| GND / чёрный | GND |
+| VCC / red | 3V3 |
+| DATA / yellow | GPIO23 / D23 |
+| GND / black | GND |
 
-Поставьте резистор **4.7 кОм** между **DATA** и **3V3**.
+Place a **4.7 kOhm** resistor between **DATA** and **3V3**.
 
-ESPHome `dallas_temp` требует настроенный `one_wire` bus. См. официальные документы:
+ESPHome `dallas_temp` requires a configured `one_wire` bus:
 https://esphome.io/components/sensor/dallas_temp/
 https://esphome.io/components/one_wire/
 
@@ -136,99 +140,99 @@ https://esphome.io/components/one_wire/
 
 ## ESPHome
 
-Файл прошивки:
+Firmware file:
 
 ```text
 esphome/midea-air.yaml
 ```
 
-Перед публикацией или использованием создайте `secrets.yaml` на основе:
+Before flashing or publishing a derivative project, create `secrets.yaml` from:
 
 ```text
 esphome/secrets.example.yaml
 ```
 
-Не публикуйте настоящий `secrets.yaml`.
+Do not commit your real `secrets.yaml`.
 
-`midea_air_fallback_password` в `secrets.example.yaml` — пример для ESPHome fallback hotspot. Перед реальным использованием замените его на свой пароль.
+`midea_air_fallback_password` in `secrets.example.yaml` is only an example ESPHome fallback hotspot password. Replace it before real use.
 
-### Основные пины
+### Main Pins
 
-| Назначение | ESP32 |
+| Purpose | ESP32 |
 |---|---|
 | Midea RX | GPIO16 |
 | Midea TX | GPIO17 |
 | DS18B20 DATA | GPIO23 |
 
-### DS18B20 address
+### DS18B20 Address
 
-В примере указан адрес:
+The example uses this sensor address:
 
 ```yaml
 address: 0xa000000035f59628
 ```
 
-Если у вас другой датчик, удалите строку `address`, прошейте ESPHome и посмотрите найденный адрес в логах.
+If your DS18B20 has a different address, remove the `address` line, flash ESPHome, and check the detected address in logs.
 
 ---
 
-## Home Assistant entity IDs
+## Home Assistant Entity IDs
 
-В моём примере использовались:
+The examples use:
 
 ```text
 climate.midea_air_midea_air
 button.midea_air_midea_air_power_toggle
 ```
 
-У вас entity IDs могут отличаться. Проверьте их в:
+Your entity IDs may differ. Check them in:
 
 ```text
-Настройки → Устройства и службы → ESPHome → Midea AIR → Объекты
+Settings -> Devices & services -> ESPHome -> Midea AIR -> Entities
 ```
 
 ---
 
-## Примеры автоматизаций
+## Automation Examples
 
-Файлы находятся в:
+Files are in:
 
 ```text
 home-assistant/automations/
 ```
 
-### 1. Минимальная температура 22°C
+### 1. Minimum Temperature 22°C
 
-Если кто-то на панели кондиционера выставит 17–21°C, Home Assistant вернёт 22°C.
+If someone sets 17-21°C on the air conditioner's panel, Home Assistant sets it back to 22°C.
 
 ```text
 home-assistant/automations/01-min-temperature-22.yaml
 ```
 
-### 2. Управление шторкой после включения
+### 2. Louver Control After Start
 
-После включения кондиционера:
+After the air conditioner turns on:
 
-1. Включает скорость вентилятора AUTO.
-2. Включает вертикальную шторку на 12 секунд.
-3. Останавливает вертикальную шторку.
-4. Включает горизонтальную шторку.
+1. Sets fan speed to AUTO.
+2. Enables vertical swing for 12 seconds.
+3. Stops vertical swing.
+4. Enables horizontal swing.
 
 ```text
 home-assistant/automations/02-louver-on-start.yaml
 ```
 
-### 3. Выключение в 20:00
+### 3. Turn Off at 20:00
 
-Отключает кондиционер в 20:00, если он включён и работает более 1 минуты.
+Turns the air conditioner off at 20:00 if it is on and has been running for more than 1 minute.
 
 ```text
 home-assistant/automations/03-turn-off-20-00.yaml
 ```
 
-### 4. Включение в 08:15
+### 4. Turn On at 08:15
 
-Пример включения в 08:15, если температура выше 22°C и кондиционер был выключен более 3 минут.
+Example: turn on at 08:15 if the room temperature is above 22°C and the air conditioner has been off for more than 3 minutes.
 
 ```text
 home-assistant/automations/04-turn-on-08-15-example.yaml
@@ -236,64 +240,64 @@ home-assistant/automations/04-turn-on-08-15-example.yaml
 
 ---
 
-## Проверка после прошивки
+## Post-Flash Checklist
 
-1. Откройте ESPHome logs.
-2. Убедитесь, что устройство подключилось к Wi‑Fi.
-3. Убедитесь, что Home Assistant добавил ESPHome device.
-4. Проверьте, что появился `climate` объект.
-5. Проверьте DS18B20 temperature sensor.
-6. Если `climate` не отвечает:
-   - проверьте GND;
-   - проверьте HV/LV level shifter;
-   - поменяйте местами только TX/RX;
-   - убедитесь, что UART `baud_rate` = `9600`.
+1. Open ESPHome logs.
+2. Confirm that the device connected to Wi-Fi.
+3. Confirm that Home Assistant added the ESPHome device.
+4. Check that a `climate` entity exists.
+5. Check the DS18B20 temperature sensor.
+6. If the `climate` entity does not respond:
+   - check GND;
+   - check HV/LV level shifter wiring;
+   - swap only TX/RX;
+   - confirm that UART `baud_rate` is `9600`.
 
 ---
 
-## Типовые ошибки
+## Troubleshooting
 
-### ESP32 есть в Wi‑Fi, но кондиционер не отвечает
+### ESP32 is on Wi-Fi, but the air conditioner does not respond
 
-Вероятные причины:
+Likely causes:
 
-- перепутаны TX/RX;
-- нет общего GND;
-- TX/RX подключены без level shifter;
-- HV/LV перепутаны;
-- питание ESP32 подано не на VIN/5V;
-- CN700 pinout определён неверно.
+- TX/RX are swapped;
+- there is no shared GND;
+- TX/RX are connected without a level shifter;
+- HV/LV sides of the level shifter are swapped;
+- ESP32 power is not connected to VIN/5V;
+- CN700 pinout was identified incorrectly.
 
-### DS18B20 не найден
+### DS18B20 is not detected
 
-Проверьте:
+Check:
 
-- резистор 4.7 кОм между DATA и 3V3;
-- DATA подключён к GPIO23;
-- датчик питается от 3V3;
-- GND общий.
+- 4.7 kOhm resistor between DATA and 3V3;
+- DATA is connected to GPIO23;
+- the sensor is powered from 3V3;
+- GND is shared.
 
-### `fan_mode: auto` не работает
+### `fan_mode: auto` does not work
 
-В Home Assistant откройте:
+Open Home Assistant:
 
 ```text
-Разработчик → Состояния → climate.midea_air_midea_air
+Developer Tools -> States -> climate.midea_air_midea_air
 ```
 
-Проверьте атрибут `fan_modes`. Иногда значение может быть `Auto` вместо `auto`.
+Check the `fan_modes` attribute. Some installations may expose `Auto` instead of `auto`.
 
 ---
 
-## Безопасность
+## Security
 
-Не публикуйте:
+Do not publish:
 
-- Wi‑Fi SSID/password, если сеть приватная;
-- API encryption key;
+- Wi-Fi SSID/password if the network is private;
+- ESPHome API encryption key;
 - OTA password;
-- реальные `device_id` из Home Assistant;
-- фото с серийными номерами, если не хотите их раскрывать.
+- real Home Assistant `device_id`;
+- photos with serial numbers if you do not want them public.
 
 ---
 

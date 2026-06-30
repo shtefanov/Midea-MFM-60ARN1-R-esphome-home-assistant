@@ -1,5 +1,5 @@
-alias: Midea AIR - минимальная температура 22
-description: Если на панели кондиционера выставили ниже 22°C, вернуть 22°C
+alias: Midea AIR - minimum temperature 22
+description: If the air conditioner panel is set below 22°C, set it back to 22°C
 mode: restart
 
 triggers:

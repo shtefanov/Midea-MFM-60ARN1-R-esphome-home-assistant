@@ -1,5 +1,5 @@
-alias: Midea AIR - отключение в 20:00
-description: Отключает кондиционер в 20:00, если он включен и работает больше 1 минуты
+alias: Midea AIR - turn off at 20:00
+description: Turns the air conditioner off at 20:00 if it is on and has been running for more than 1 minute
 mode: single
 
 triggers:

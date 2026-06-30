@@ -1,7 +1,7 @@
-alias: Включение кондиционера ЗАЛ Midea
+alias: Midea AIR - turn on at 08:15 example
 description: >
-  Пример включения в 08:15: только если кондиционер был выключен больше 3 минут
-  и температура выше 22°C. Замените entity_id датчиков под свою систему.
+  Example 08:15 start: only if the air conditioner has been off for more than 3 minutes
+  and temperature is above 22°C. Replace entity IDs with your own system entities.
 mode: single
 
 triggers:
@@ -9,7 +9,7 @@ triggers:
     at: "08:15:00"
 
 conditions:
-  # Пример: заменить на свой датчик/условие "зал открыт", "свет включен" и т.д.
+  # Example: replace with your own condition, such as "hall is open" or "light is on".
   # - condition: state
   #   entity_id: light.your_hall_light
   #   state: "on"
